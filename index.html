@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/pagina-pagamentos.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/assets/favicon/favicon.ico">
+    <title>Pagamentos</title>
+</head>
+<body>
+    <header>
+        <a href="./index.html">
+            <img src="./src/assets/img/shopping-cart.png" alt="cart image shopping">
+        </a>
+        <div>
+            <h1>Minha Loja</h1>
+            <p>Compra segura e rápida</p>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container-title">
+            <h1>Pagamento</h1>
+            <p>Escolha sua forma de pagamento</p>
+        </div>
+
+        <form id="meu-form">
+            <!-- area de cabeçalho -->
+            <label for="valor" class="label-valor">
+                <span class="valor-compra">Valor da compra</span>
+                <span class="box-input-valor">R$
+                    <input type="text" name="valor" id="valor" required>
+                </span>
+                <span id="info-error"></span>
+            </label>
+
+            <!-- area de escolha do tipo de pagamento -->
+            <div class="container-radio">
+
+                <label for="tipo-pagamento-pix" class="labels pix" id="box-pix">
+                    <input type="radio" name="type-pay" value="pix" id="tipo-pagamento-pix">
+
+                    <i class="fa-brands fa-pix" style="color: rgb(99, 230, 190);"></i>
+                    <span class="info">
+                        <p>Pix</p>
+                        <p>Pagamento instantâneo e sem taxas</p>
+                    </span>
+                    
+
+                </label>
+
+                <label for="tipo-pagamento-cartao" class="labels cartao" id="box-card-credit">
+                    <input type="radio" name="type-pay" value="credit-card" id="tipo-pagamento-cartao">
+                    <i class="fa-solid fa-credit-card"></i>
+
+                    <span class="info">
+                        <p>Cartão de Credito</p>
+                        <p>Pagamento em até 3x (sem juros)</p>
+                    </span>
+                    
+                </label>
+            </div>
+
+            <!-- area de informação do pagamento -->
+            <button type="button" id="informa-dados">Informar dados</button>
+
+            <!-- Area do pix para inserir dados das chave pra pagamento -->
+            <div id="area-pix">
+                <h3>Pagamento via Pix</h3>
+                <p class="sub-title">Informe sua chave pix</p>
+
+
+                <label for="pix-pagamento" class="box-pagamento-pix">
+                    <p>Chave Pix</p>
+                    <input type="text" name="pix-pagamento" id="pix-pagamento" class="input-pix" placeholder="Digite sua chave Pix(CPF, CNPJ, e-mail, telefone ou chave aleatória)">
+                </label>
+
+                <span class="show-total"> 
+                    <span id="returnError"></span>
+                    <span>Total:<span id="total"></span></span>
+                </span>
+
+
+                <span class="info-gerar-qr-code">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Apos confirmação, sera gerado o QR Code, para pagamento!</span>
+                </span>
+            </div>
+
+            <div id="area-card-credito">
+                <h3>Pagamento via Cartão de Crédito</h3>
+                <p class="sub-title">Preencha os dados do seu cartão para continuar</p>
+
+                <div class="dados-card-credit">
+                    <label for="date-number-card">
+                        <p>Numero do cartão</p>
+                        <span id="number-credit-card">
+                            <input type="text" name="number-credit" id="date-number-card" placeholder="0000 0000 0000 0000">
+                            <i class="fa-regular fa-credit-card" id="iconCard"></i>
+
+                            <i class="fa-brands fa-cc-visa" id="cc-visa"></i>
+
+                            <i class="fa-brands fa-cc-mastercard" id="cc-master-card"></i>
+                        </span>
+                    </label>
+
+                    <div class="box-dados-info">
+                        <label for="name-card">
+                            <p>Nome do cartão</p>
+                            <input type="text" name="name-credit-card" id="name-card" placeholder="Como está no cartão">
+                        </label>
+
+                        <label for="data-card">
+                            <p>Validade</p>
+                            <input type="text" name="data" id="data-card" placeholder="MM / AA">
+                        </label>
+
+                        <label for="id-cvv">
+                            <p>CVV</p>
+                            <span class="cvv" id="box-cvv">
+                                <input type="text" name="cvv" id="id-cvv" placeholder="4 dígitos">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </span>
+                        </label>
+
+                    </div>
+
+                    <label for="parcelas">
+                        <p>Parcelamento</p>
+                        <select name="parcelamento" id="parcelas">
+                        </select>
+                    </label>
+                    
+                </div>
+                
+                <!-- Resposta ao user sobre erro -->
+                <span id="container-resposta">
+                    <span id="showErrorCreditCard"></span>
+                    <span id="box-valor-total">
+                        Total
+                        <span id="resultado"></span>
+                    </span>
+                </span>
+                 
+            </div>
+
+            <button type="button" id="pagar" class="box-button-pagar">
+                
+                <!-- Elemento do Botao pra pagamento com pix -->
+                <span id="box-icon-pix">
+                    <i class="fa-brands fa-pix"></i>
+                    <p>Continuar com Pix</p>
+                </span>
+
+                <!-- Elemento do Botao pra pagamento com cartão de credito -->
+                 <span id="box-icon-card-credit">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <p>Finalizar Pagamento</p>
+                </span>
+
+            </button>
+
+        </form>
+
+        <!-- Exibir resposta de Pagamento -->
+        <div id="success-pagamento">
+            <i class="fa-solid fa-circle-check"></i>
+            <h1>Pagamento Realizado com Sucesso!</h1>
+        </div>
+    </main>
+
+    <!-- Importando a biblioteca QRCode.js via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- 1. jQuery (obrigatório) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- 2. Inputmask (a versão 5.x é a mais moderna) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+
+    <script type="module" src="./src/js/engineer.js"></script>
+
+    <script>
+
+        
+    </script>
+</body>
+</html>
